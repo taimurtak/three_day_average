@@ -1,0 +1,9 @@
+SELECT
+  "transaction_time"::DATE AS "date",
+  AVG("transaction_amount") OVER (
+    ORDER BY "transaction_time"::DATE
+    RANGE BETWEEN INTERVAL '2 days' PRECEDING AND CURRENT ROW
+  ) AS "rolling_3_day_avg_amount"
+FROM transactions
+WHERE "transaction_time"::DATE BETWEEN '2021-01-01' AND '2021-01-31'
+ORDER BY "transaction_time"::DATE
